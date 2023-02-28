@@ -21,7 +21,7 @@ alias ls="ls -GF"
 alias ll="ls -laGF"
 
 go(){git branch --all --format="%(refname:short)" | fzf | xargs git checkout}
-gbdel(){git branch --all --format="%(refname:short)" | fzf | xargs git branch -d}
+gbdel(){git branch --format="%(refname:short)" | fzf | xargs git branch -d}
 
 alias gom="git checkout main"
 alias gl="git log --graph --pretty=format:'%h %ad (%an) %s' --date=short"
