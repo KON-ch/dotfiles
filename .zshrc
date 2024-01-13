@@ -17,6 +17,8 @@ PROMPT="
 %F{magenta}%c%f %F{cyan}%n%f \$vcs_info_msg_0_
 $ "
 
+export PATH=/usr/bin/git:$PATH
+
 alias ls="ls -GF"
 alias ll="ls -laGF"
 
