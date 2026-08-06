@@ -20,29 +20,42 @@ $ "
 export PATH=/usr/bin/git:$PATH
 
 alias ls="ls -GF"
-alias ll="ls -laGF"
+alias ll="ls -lAGF"
+alias la="ls -AGF"
 
-go(){git branch --all --format="%(refname:short)" | fzf | xargs git checkout}
+go(){
+  local branch
+  branch=$(git branch --format="%(refname:short)" | fzf) || return
+  git switch "$branch"
+}
 gbdel(){git branch --format="%(refname:short)" | fzf | xargs git branch -d}
 
-alias gom="git checkout main"
-alias gl="git log --graph --pretty=format:'%h %ad (%an) %s' --date=short"
+alias gom="git switch main"
+alias gl="git log --graph --decorate --pretty=format:'%C(auto)%h%d %C(reset)%ad (%an) %s' --date=short"
+alias gl1="gl -10"
 
-alias gp="git pull"
-alias gs="git status"
+alias gsw="git switch"
+alias gpl="git pull"
+alias gp="git push"
+alias gs="git status -sb"
 alias gd="git diff"
+alias gds="git diff --stat"
 alias gdc="git diff --cached"
 alias ga="git add"
 alias gc="git commit"
 alias gcm="git commit -m"
 alias gca="git commit --amend"
+alias gcan="git commit --amend --no-edit"
 alias gb="git branch -v"
 alias gf="git fetch"
 alias gm="git merge"
 alias gr="git restore"
-alias gsu="git stash -u"
+alias grs="git restore --staged"
+alias gsu="git stash push -u"
 alias gsp="git stash pop"
 alias gsl="git stash list"
+alias grh="git reset --hard"
+alias gshow="git show"
 
 alias dc="docker compose"
 alias dcd="docker compose -f docker-compose.dev.yml"
