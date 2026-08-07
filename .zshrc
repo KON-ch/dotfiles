@@ -25,12 +25,51 @@ alias la="ls -AGF"
 
 go(){
   local branch
-  branch=$(git branch --format="%(refname:short)" | fzf) || return
+  branch=$(
+    git branch --format="%(refname:short)" |
+    fzf --preview "git log --oneline --graph --decorate -20 {}"
+  ) || return
   git switch "$branch"
 }
-gbdel(){git branch --format="%(refname:short)" | fzf | xargs git branch -d}
+gbdel(){
+  local branch
+  branch=$(
+    git branch --format="%(refname:short)" |
+      grep -vx "$(git branch --show-current)" |
+      fzf
+  ) || return
+  git branch -d "$branch"
+}
+gspop() {
+  local stash
+  stash=$(
+    git stash list |
+    fzf --preview 'git stash show -p {1}' |
+    cut -d: -f1
+  ) || return
+  git stash pop "$stash"
+}
+gshow() {
+  local commit
+  commit=$(
+    git log --oneline |
+    fzf --preview 'git show --color=always {1}' |
+    awk '{print $1}'
+  ) || return
+  git show "$commit"
+}
+gsdrop() {
+  local stash
+  stash=$(
+    git stash list |
+    fzf --preview 'git stash show -p {1}' |
+    cut -d: -f1
+  ) || return
+  git stash drop "$stash"
+}
 
 alias gom="git switch main"
+alias gback="git switch -"
 alias gl="git log --graph --decorate --pretty=format:'%C(auto)%h%d %C(reset)%ad (%an) %s' --date=short"
 alias gl1="gl -10"
 
@@ -48,14 +87,14 @@ alias gca="git commit --amend"
 alias gcan="git commit --amend --no-edit"
 alias gb="git branch -v"
 alias gf="git fetch"
+alias gfp="git fetch --prune"
 alias gm="git merge"
 alias gr="git restore"
 alias grs="git restore --staged"
 alias gsu="git stash push -u"
-alias gsp="git stash pop"
 alias gsl="git stash list"
 alias grh="git reset --hard"
-alias gshow="git show"
+alias gcp="git cherry-pick"
 
 alias dc="docker compose"
 alias dcd="docker compose -f docker-compose.dev.yml"
