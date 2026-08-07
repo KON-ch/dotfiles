@@ -22,6 +22,8 @@ export PATH=/usr/bin/git:$PATH
 alias ls="ls -GF"
 alias ll="ls -lAGF"
 alias la="ls -AGF"
+alias cp="cp -i"
+alias mv="mv -i"
 
 go(){
   local branch
