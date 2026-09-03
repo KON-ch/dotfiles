@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
-
 if ! command -v brew >/dev/null 2>&1; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
@@ -19,17 +17,4 @@ if ! command -v brew >/dev/null 2>&1; then
   exit 1
 fi
 
-brew install git
 brew install --cask docker google-chrome visual-studio-code firefox microsoft-edge zoom
-
-for config_file in .zshrc .bash_profile .bashrc .shellrc; do
-  source_file="$script_dir/$config_file"
-  target_file="$HOME/$config_file"
-
-  if [ ! -e "$target_file" ] && [ ! -L "$target_file" ]; then
-    ln -s "$source_file" "$target_file"
-    echo "Created $target_file -> $source_file"
-  fi
-done
-
-echo "Open a new terminal, or run: source ~/.zshrc"
