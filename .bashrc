@@ -33,3 +33,14 @@ set_bash_prompt() {
 PROMPT_COMMAND=set_bash_prompt
 
 source "$HOME/.shellrc"
+
+if [ -f /opt/homebrew/etc/bash_completion.d/git-completion.bash ]; then
+  source /opt/homebrew/etc/bash_completion.d/git-completion.bash
+elif [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
+  source /usr/local/etc/bash_completion.d/git-completion.bash
+fi
+
+if declare -F __git_complete >/dev/null; then
+  __git_complete go _git_switch
+  __git_complete gbdel _git_branch
+fi

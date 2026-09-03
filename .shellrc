@@ -6,31 +6,11 @@ alias la="ls -AGF"
 alias cp="cp -i"
 alias mv="mv -i"
 
-go(){
-  local branch
-  branch=$(git branch --format="%(refname:short)" | fzf --preview "git log --oneline --graph --decorate -20 {}") || return
-  git switch "$branch"
-}
-gbdel(){
-  local branch
-  branch=$(git branch --format="%(refname:short)" | grep -vx "$(git branch --show-current)" | fzf) || return
-  git branch -d "$branch"
-}
-gspop() {
-  local stash
-  stash=$(git stash list | fzf --preview 'git stash show -p {1}' | cut -d: -f1) || return
-  git stash pop "$stash"
-}
-gshow() {
-  local commit
-  commit=$(git log --oneline | fzf --preview 'git show --color=always {1}' | awk '{print $1}') || return
-  git show "$commit"
-}
-gsdrop() {
-  local stash
-  stash=$(git stash list | fzf --preview 'git stash show -p {1}' | cut -d: -f1) || return
-  git stash drop "$stash"
-}
+alias go="git switch"
+alias gbdel="git branch -d"
+alias gspop="git stash pop"
+alias gshow="git show"
+alias gsdrop="git stash drop"
 
 alias gom="git switch main"
 alias gback="git switch -"

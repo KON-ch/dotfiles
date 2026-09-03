@@ -19,7 +19,7 @@ if ! command -v brew >/dev/null 2>&1; then
   exit 1
 fi
 
-brew install git fzf
+brew install git
 brew install --cask docker google-chrome visual-studio-code firefox microsoft-edge zoom
 
 for config_file in .zshrc .bash_profile .bashrc .shellrc; do
