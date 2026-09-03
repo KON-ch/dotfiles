@@ -1,8 +1,14 @@
 export PATH=/usr/bin/git:$PATH
 
-alias ls="ls -GF"
-alias ll="ls -lAGF"
-alias la="ls -AGF"
+if [[ "$OSTYPE" == darwin* ]]; then
+  alias ls="ls -GF"
+  alias ll="ls -lAGF"
+  alias la="ls -AGF"
+else
+  alias ls="ls -F --color=auto"
+  alias ll="ls -lA --color=auto"
+  alias la="ls -A --color=auto"
+fi
 alias cp="cp -i"
 alias mv="mv -i"
 
